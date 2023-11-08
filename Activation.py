@@ -1,20 +1,34 @@
 import numpy as np
 
 
-def tanh(x):
-    return np.tanh(x)
+class Activation:
+    @staticmethod
+    def activ(x):
+        raise NotImplementedError
+
+    @staticmethod
+    def activ_prime(x):
+        raise NotImplementedError
 
 
-def tanh_prime(x):
-    return 1-np.tanh(x)**2
+class Tanh(Activation):
+    @staticmethod
+    def activ(x):
+        return np.tanh(x)
+
+    @staticmethod
+    def activ_prime(x):
+        return 1-np.tanh(x)**2
 
 
-def relu(x):
-    return max(0, x)
+class ReLu(Activation):
+    @staticmethod
+    def activ(x):
+        return max(0, x)
 
-
-def relu_prime(x):
-    if x >= 0:
-        return 1
-    else:
-        return 0
+    @staticmethod
+    def activ_prime(x):
+        if x >= 0:
+            return 1
+        else:
+            return 0

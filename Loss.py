@@ -1,9 +1,23 @@
 import numpy as np
 
 
-def mse(y_true, y_pred):
-    return np.mean(np.power(y_true-y_pred, 2))
+class Loss:
+    @staticmethod
+    def loss(y_true, y_pred):
+        raise NotImplementedError
+
+    @staticmethod
+    def loss_prime(y_true, y_pred):
+        raise NotImplementedError
 
 
-def mse_prime(y_true, y_pred):
-    return 2*(y_pred-y_true)/y_true.size
+class MSE(Loss):
+    @staticmethod
+    def loss(y_true, y_pred):
+        return np.mean(np.power(y_true - y_pred, 2))
+
+    @staticmethod
+    def loss_prime(y_true, y_pred):
+        return 2 * (y_pred - y_true) / y_true.size
+
+
