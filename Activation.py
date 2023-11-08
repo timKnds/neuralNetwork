@@ -24,11 +24,11 @@ class Tanh(Activation):
 class ReLu(Activation):
     @staticmethod
     def activ(x):
-        return max(0, x)
+        return np.maximum(np.zeros_like(x), x)
 
     @staticmethod
     def activ_prime(x):
-        if x >= 0:
-            return 1
-        else:
-            return 0
+        copy = np.copy(x)
+        copy[copy >= 0] = 1
+        copy[copy < 0] = 0
+        return copy
