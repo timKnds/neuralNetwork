@@ -7,3 +7,6 @@
 3. Layer - Fully Connected Layer, Activation Layer
 4. Network - Implementation of Network
 5. use - example implementation of network
+
+start with `Network()` <br>
+add layers with `.add(Layer)`
