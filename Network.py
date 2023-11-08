@@ -10,9 +10,9 @@ class Network:
     def add(self, layer):
         self.layers.append(layer)
 
-    def use(self, loss, loss_prime):
-        self.loss = loss
-        self.loss_prime = loss_prime
+    def use(self, loss):
+        self.loss = loss.loss
+        self.loss_prime = loss.loss_prime
 
     def predict(self, input_data):
         samples = len(input_data)

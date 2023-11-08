@@ -33,9 +33,9 @@ class FCLayer(Layer):
 
 
 class ActivationLayer(Layer):
-    def __init__(self, activation, activation_prime):
-        self.activation = activation
-        self.activation_prime = activation_prime
+    def __init__(self, activation):
+        self.activation = activation.activ
+        self.activation_prime = activation.activ_prime
 
     def forward(self, input_data):
         self.input = input_data
