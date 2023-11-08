@@ -15,8 +15,8 @@ class Layer:
 
 class FCLayer(Layer):
     def __init__(self, input_size, output_size):
-        self.weights = np.random.rand(input_size, output_size) - 0.5
-        self.biases = np.random.rand(1, output_size) - 0.5
+        self.weights = np.random.rand(input_size, output_size)
+        self.biases = np.random.rand(1, output_size)
 
     def forward(self, input_data):
         self.input = input_data
