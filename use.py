@@ -6,9 +6,9 @@ from Layer import FCLayer, ActivationLayer
 from Loss import MSE, CrossEntropy
 from Activation import Tanh, ReLu
 
-"""
+
 x_train = np.array([[[0,0]], [[0,1]], [[1,0]], [[1,1]]])
-x_evaluate = np.array([[[1,1]], [[1,1]], [[1,0]], [[1,1]]])
+x_evaluate = np.array([[[0,0]], [[1,1]], [[1,0]], [[1,1]]])
 # [0][0][1][0]
 y_train = np.array([[[0]], [[1]], [[1]], [[0]]])
 
@@ -18,13 +18,13 @@ nn.add(ActivationLayer(Tanh()))
 nn.add(FCLayer(3, 1))
 nn.add(ActivationLayer(Tanh()))
 
-nn.use(CrossEntropy())
-nn.fit(x_train, y_train, epochs=1000, learning_rate=0.01)
+nn.use(MSE())
+nn.fit(x_train, y_train, epochs=10000, learning_rate=0.01)
 
 output = nn.predict(x_evaluate)
 print(output)
-"""
 
+"""
 train = pd.read_csv('/Users/timknudsen/Documents/Dokumente Mac/Pycharm-Projekte/neuralNetwork/archive/mnist_train.csv')
 test = pd.read_csv('/Users/timknudsen/Documents/Dokumente Mac/Pycharm-Projekte/neuralNetwork/archive/mnist_test.csv')
 
@@ -43,9 +43,7 @@ x_test, y_test = read(test)
 net = Network()
 net.add(FCLayer(784, 392))
 net.add(ActivationLayer(Tanh()))
-net.add(FCLayer(392, 100))
-net.add(ActivationLayer(Tanh()))
-net.add(FCLayer(100, 10))
+net.add(FCLayer(392, 10))
 net.add(ActivationLayer(Tanh()))
 
 net.use(CrossEntropy())
@@ -53,4 +51,4 @@ net.fit(x_train, y_train, 10, learning_rate=0.1)
 
 output = net.predict(x_test)
 print(output)
-
+"""

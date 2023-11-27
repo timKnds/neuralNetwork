@@ -6,7 +6,7 @@ class Layer:
         self.input = None
         self.output = None
 
-    def forward(self, input_data):
+    def __call__(self, input_data):
         raise NotImplementedError
 
     def backward(self, output_error, learning_rate):
@@ -15,10 +15,11 @@ class Layer:
 
 class FCLayer(Layer):
     def __init__(self, input_size, output_size):
+        super().__init__()
         self.weights = np.random.rand(input_size, output_size)
         self.biases = np.random.rand(1, output_size)
 
-    def forward(self, input_data):
+    def __call__(self, input_data):
         self.input = input_data
         self.output = np.dot(self.input, self.weights) + self.biases
         return self.output
@@ -34,10 +35,11 @@ class FCLayer(Layer):
 
 class ActivationLayer(Layer):
     def __init__(self, activation):
+        super().__init__()
         self.activation = activation.activ
-        self.activation_prime = activation.activ_prime
+        self.activation_prime = activation.activ_grad
 
-    def forward(self, input_data):
+    def __call__(self, input_data):
         self.input = input_data
         self.output = self.activation(self.input)
         return self.output

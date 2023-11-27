@@ -1,48 +1,40 @@
-import numpy as np
+from Layer import Layer
 
 
 class Network:
     def __init__(self):
         self.layers = []
         self.loss = None
-        self.loss_prime = None
+        self.loss_grad = None
+
+    def __call__(self, x):
+        for layer in self.layers:
+            x = layer(x)
+        return x
+
+    def __add__(self, other):
+        assert isinstance(other, Layer)
+        self.add(other)
 
     def add(self, layer):
         self.layers.append(layer)
 
     def use(self, loss):
         self.loss = loss.loss
-        self.loss_prime = loss.loss_prime
-
-    def predict(self, input_data):
-        samples = len(input_data)
-        result = []
-
-        for i in range(samples):
-            output = input_data[i]
-
-            for layer in self.layers:
-                output = layer.forward(output)
-
-            result.append(output)
-
-        return result
+        self.loss_grad = loss.loss_grad
 
     def fit(self, x_train, y_train, epochs, learning_rate):
+        assert len(x_train) == len(y_train)
+
         samples = len(x_train)
-
-        for i in range(epochs):
-            err = 0
-            for j in range(samples):
-                output = x_train[j]
-                for layer in self.layers:
-                    output = layer.forward(output)
-
-                err += self.loss(y_train[j], output)
-
-                error = self.loss_prime(y_train[j], output)
+        err = 0
+        for j in range(epochs):
+            for i in range(samples):
+                yhat = self(x_train[i])
+                err += self.loss(y_train[i], yhat)
+                err_grad = self.loss_grad(y_train, yhat)
                 for layer in reversed(self.layers):
-                    error = layer.backward(error, learning_rate)
+                    err_grad = layer.backward(err_grad, learning_rate)
 
-            err /= samples
-            print('epoch %d/%d  error=%f' % (i+1, epochs, err))
+            err /= len(x_train)
+            print('epoch %d/%d  error=%f' % (j+1, epochs, err))
