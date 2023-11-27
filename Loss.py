@@ -7,7 +7,7 @@ class Loss:
         raise NotImplementedError
 
     @staticmethod
-    def loss_prime(y, yhat):
+    def loss_grad(y, yhat):
         raise NotImplementedError
 
 
@@ -18,7 +18,7 @@ class MSE(Loss):
         return (y - yhat) ** 2
 
     @staticmethod
-    def loss_prime(y, yhat):
+    def loss_grad(y, yhat):
         return 2 * (yhat - y)
 
 
@@ -28,8 +28,7 @@ class CrossEntropy(Loss):
         # Calculate the cross-entropy loss
         return - np.sum(y * np.log(yhat)) / y.size
 
-
     @staticmethod
-    def loss_prime(y, yhat):
+    def loss_grad(y, yhat):
         # Calculate the derivative of cross-entropy loss function
         return - (y / yhat) / y.size

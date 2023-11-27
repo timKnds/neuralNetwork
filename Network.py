@@ -30,9 +30,10 @@ class Network:
         err = 0
         for j in range(epochs):
             for i in range(samples):
+                y = y_train[i]
                 yhat = self(x_train[i])
-                err += self.loss(y_train[i], yhat)
-                err_grad = self.loss_grad(y_train, yhat)
+                err += self.loss(y, yhat)
+                err_grad = self.loss_grad(y_train[i], yhat)
                 for layer in reversed(self.layers):
                     err_grad = layer.backward(err_grad, learning_rate)
 
