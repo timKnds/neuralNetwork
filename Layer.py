@@ -16,8 +16,12 @@ class Layer:
 class FCLayer(Layer):
     def __init__(self, input_size, output_size):
         super().__init__()
-        self.weights = np.random.rand(input_size, output_size)
-        self.biases = np.random.rand(1, output_size)
+        # Set weights with random values between -1 and 1
+        self.weights = np.random.rand(input_size, output_size) * 2 - 1
+        self.biases = np.random.rand(1, output_size) * 2 - 1
+
+    def parameters(self):
+        return np.prod(self.weights.shape) + np.prod(self.biases.shape)
 
     def __call__(self, input_data):
         self.input = input_data
