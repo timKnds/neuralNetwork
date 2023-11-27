@@ -37,8 +37,8 @@ class ReLu(Activation):
 class Sigmoid(Activation):
     @staticmethod
     def activ(x):
-        pass
+        return 1/(1+np.exp(-x))
 
     @staticmethod
     def activ_grad(x):
-        pass
+        return np.exp(-x)/(1+np.exp(-x))**2
