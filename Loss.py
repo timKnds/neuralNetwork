@@ -25,20 +25,12 @@ class MSE(Loss):
 class CrossEntropy(Loss):
     @staticmethod
     def loss(y, yhat):
+        assert len(y) == len(yhat)
         # Calculate the cross-entropy loss
-        if y == 1:
-            return - np.log(yhat)
-        elif y == 0:
-            return - np.log(1 - yhat)
-        else:
-            raise ValueError("y must be 0 or 1")
+        return np.sum(-(y * np.log(yhat))+(1-y)*np.log(1-yhat))
 
     @staticmethod
     def loss_grad(y, yhat):
+        assert len(y) == len(yhat)
         # Calculate the derivative of cross-entropy loss function
-        if y == 1:
-            return - 1 / yhat
-        elif y == 0:
-            return 1 / (1 - yhat)
-        else:
-            raise ValueError("y must be 0 or 1")
+        return -(y * 1/yhat) + (1-y) * 1/(1-yhat)
