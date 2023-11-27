@@ -14,12 +14,12 @@ class Loss:
 class MSE(Loss):
     @staticmethod
     def loss(y, yhat):
-        # calculate the mean square error
-        return (y - yhat) ** 2
+        # calculate the mean square error over numpy arrays y and yhat
+        return np.sum((y - yhat) ** 2)    
 
     @staticmethod
     def loss_grad(y, yhat):
-        return 2 * (yhat - y)
+        return [2 * (yhati - yi) for yi, yhati in zip(y, yhat)]
 
 
 class CrossEntropy(Loss):
