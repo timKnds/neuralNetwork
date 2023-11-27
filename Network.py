@@ -12,10 +12,6 @@ class Network:
             x = layer(x)
         return x
 
-    def __add__(self, other):
-        assert isinstance(other, Layer)
-        self.add(other)
-
     def add(self, layer):
         self.layers.append(layer)
 
@@ -26,16 +22,16 @@ class Network:
     def fit(self, x_train, y_train, epochs, learning_rate):
         assert len(x_train) == len(y_train)
 
-        samples = len(x_train)
-        err = 0
-        for j in range(epochs):
-            for i in range(samples):
-                y = y_train[i]
-                yhat = self(x_train[i])
-                err += self.loss(y, yhat)
-                err_grad = self.loss_grad(y_train[i], yhat)
+        for i in range(epochs):
+            error = 0
+            for xi, yi in zip(x_train, y_train):
+            # forward
+                output = xi
+                for layer in self.layers:
+                    output = layer(output)
+                error += self.loss(yi, output)
+                err_grad = self.loss_grad(yi, output)
                 for layer in reversed(self.layers):
                     err_grad = layer.backward(err_grad, learning_rate)
-
-            err /= len(x_train)
-            print('epoch %d/%d  error=%f' % (j+1, epochs, err))
+            error /= len(x_train)
+            print('Tim epoch %d/%d  error=%f' % (i+1, epochs, error))

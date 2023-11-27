@@ -6,6 +6,9 @@ class Layer:
         self.input = None
         self.output = None
 
+    def parameters(self):
+        raise NotImplementedError
+
     def __call__(self, input_data):
         raise NotImplementedError
 
@@ -21,7 +24,7 @@ class FCLayer(Layer):
         self.biases = np.random.rand(1, output_size) * 2 - 1
 
     def parameters(self):
-        return np.prod(self.weights.shape) + np.prod(self.biases.shape)
+        return self.weights
 
     def __call__(self, input_data):
         self.input = input_data
